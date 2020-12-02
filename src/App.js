@@ -18,6 +18,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+export const dataContext = React.createContext();
+
 function App() {
   const classes = useStyles();
 
@@ -30,11 +32,13 @@ function App() {
           <MentionCrt setData={setuserText}/>
         
         </Grid>
+
+        <dataContext.Provider value ={{userText}}>
       
-        <Grid item xs={6}>
-        
-          <MentionBrd useData={userText}/>
-        </Grid>
+          <Grid item xs={6}>
+            <MentionBrd/>
+         </Grid>
+        </dataContext.Provider>
       
       </Grid>
     </>
