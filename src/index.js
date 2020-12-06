@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-// import App from './App';
-// import App from "./shared/App.js"
+
 import Root from "./client/Root.js"
 import {BrowserRouter} from "react-router-dom";
 import reportWebVitals from './reportWebVitals';

@@ -1,17 +1,23 @@
 import React from "react";
-import {Route} from "react-router-dom";
-import {Home,About,Login} from "../pages";
+import {Route,BrowserRouter} from "react-router-dom";
+import {Home,About,Login,MentionUpload,SignUp} from "../pages";
 
 export default function App() {
 
     return (
         <>
+        <BrowserRouter>
+  
             <div>
                 <Route exact path="/" component={Login} />
                 <Route exact path="/hello" component={Home} />
-
+                
                 <Route exact path="/about" component={About} />
+                <Route exact path="/auth/mention" component={MentionUpload} />
+                <Route exact path="/auth/signup" component={SignUp} />
+                
             </div>
+            </BrowserRouter>
 
         </>
 

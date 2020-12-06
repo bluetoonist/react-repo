@@ -11,9 +11,6 @@ import {AppBar,Toolbar,Container,CssBaseline,Typography,Button,TextField} from '
 
 import {useHistory} from "react-router-dom";
 import Img from "./images/images.png";
-import { Login } from '.';
-
-import About from "./About.js"
 
 
 const useStyles = makeStyles((theme) => ({
@@ -69,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-
+// 로그인 정보 요청
 export default function ButtonAppBar() {
     const classes = useStyles();
     const history = useHistory();
@@ -80,18 +77,29 @@ export default function ButtonAppBar() {
         const LoginId = e.target[0].value;
         const LoginPw = e.target[1].value;
     
-        const response = await fetch("http://127.0.0.1:8000/auth/onlogin/",{
+        const response = await fetch("http://127.0.0.1:8000/auth/onlogin",{
         method : "POST",
         headers : {
             "Content-Type" : "application/json",
             // "Access-Control-Allow-Origin" : "*",
         },
-        body : JSON.stringify({ID : "LoginId", PW :LoginPw})
+        body : JSON.stringify({ username : LoginId, password :LoginPw})
     
         })
         const resdata = await response.json()
-        history.push("/About/");
-     
+        if (resdata.status === "Success") {
+            console.log("Login Success");
+            history.push("/auth/mention");
+            
+
+        } else {
+            console.log('Server is Not connect')
+        }
+        
+    }
+
+    const MoveSignUpPage = () =>{
+        history.push("/auth/signup")
     }
 
 
@@ -111,7 +119,7 @@ export default function ButtonAppBar() {
             <Container fixed>
                 <Typography component="div" className={classes.LoginForm} >            
                     <form className={classes.formStyle} noValidate autoComplete="off" onSubmit={OnLogin}>
-                        <img src={Img} className={classes.LoginImage}/>
+                        <img src={Img} className={classes.LoginImage} alt="onLogin"/>
                         <label>
                         <TextField className={classes.formInput} id="standard-basic" name="ID" label="ID를 입력하세요" fullWidth />
                         <br />
@@ -121,7 +129,7 @@ export default function ButtonAppBar() {
                             LOGIN
                         </Button>
                         
-                        <Button className={classes.formButton} size="medium" variant="contained" color="secondary">
+                        <Button className={classes.formButton} size="medium" variant="contained" color="secondary" onClick={MoveSignUpPage}>
                             SIGNUP
                         </Button>
 

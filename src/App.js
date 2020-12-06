@@ -3,8 +3,8 @@ import { makeStyles } from "@material-ui/core/styles"
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 
-import MentionCrt from "./layouts/MentionCrt.js"
-import MentionBrd from "./layouts/MentionBrd.js"
+import MentionCrt from "./pages/layouts/MentionCrt.js"
+import MentionBrd from "./pages/layouts/MentionBrd.js"
 
 const useStyles = makeStyles((theme) => ({
   root: {
