@@ -7,7 +7,16 @@ import TextField from '@material-ui/core/TextField';
 import SignUpImg from "../images/signup.png";
 import Button from '@material-ui/core/Button';
 import {useHistory} from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
+
+
+toast.configure();
+const notify = () => {
+    toast.error("ID가 이미 존재합니다. !",{position : toast.POSITION.TOP_RIGHT} )
+
+}
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -47,12 +56,11 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-
 function Signup() {
 
     const classes = useStyles();
     const history = useHistory();
-
+    
     const OnSignUp = async (e) => {
         e.preventDefault();
         const register_id = e.target[0].value;
@@ -69,7 +77,7 @@ function Signup() {
                 history.push("/");
             }
             if (response.data.LoginStatus ==="Duplicate"){
-                
+                notify();
             }
     
         })

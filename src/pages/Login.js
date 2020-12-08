@@ -7,11 +7,17 @@
 
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import {AppBar,Toolbar,Container,CssBaseline,Typography,Button,TextField} from '@material-ui/core';
-
-import {useHistory} from "react-router-dom";
+import { AppBar, Toolbar, Container, CssBaseline, Typography, Button, TextField } from '@material-ui/core';
+import { ToastContainer, toast } from 'react-toastify';
+import { useHistory } from "react-router-dom";
+import 'react-toastify/dist/ReactToastify.css';
 import Img from "./images/images.png";
 
+
+toast.configure();
+const notify = () => {
+    toast.error("Login Has Bee Failed");
+}
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -30,23 +36,23 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
     },
     LoginImage: {
-        width : "30%",
-        height : "40%",
+        width: "30%",
+        height: "40%",
         marginLeft: "35%",
         marginTop: "15%",
         alignSelf: 'center',
-    
+
     },
     LoginForm: {
 
         width: "70%",
         height: "60vh",
         // background : "#FFE5E0",
-    
+
         marginLeft: "15%",
         marginTop: "-5%",
         justifyContent: "center",
-        
+
     },
     formInput: {
         marginTop: "8%",
@@ -71,34 +77,32 @@ export default function ButtonAppBar() {
     const classes = useStyles();
     const history = useHistory();
 
-    async function OnLogin(e){
+    async function OnLogin(e) {
         e.preventDefault();
-    
+
         const LoginId = e.target[0].value;
         const LoginPw = e.target[1].value;
-    
-        const response = await fetch("http://127.0.0.1:8000/auth/onlogin",{
-        method : "POST",
-        headers : {
-            "Content-Type" : "application/json",
-            // "Access-Control-Allow-Origin" : "*",
-        },
-        body : JSON.stringify({ username : LoginId, password :LoginPw})
-    
-        })
-        const resdata = await response.json()
-        if (resdata.status === "Success") {
-            console.log("Login Success");
-            history.push("/auth/mention");
-            
-
-        } else {
-            console.log('Server is Not connect')
+        try {
+            const response = await fetch("http://127.0.0.1:8000/auth/onlogin", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ username: LoginId, password: LoginPw })
+            })
+            const resdata = await response.json()
+            if (resdata.status === "Success") {
+                console.log("Login Success");
+                history.push("/auth/mention");
+            } else {
+                console.log('Server is Not connect')
+            }
+        } catch {
+            notify();
         }
-        
     }
 
-    const MoveSignUpPage = () =>{
+    const MoveSignUpPage = () => {
         history.push("/auth/signup")
     }
 
@@ -117,24 +121,24 @@ export default function ButtonAppBar() {
             <CssBaseline />
 
             <Container fixed>
-                <Typography component="div" className={classes.LoginForm} >            
+                <Typography component="div" className={classes.LoginForm} >
                     <form className={classes.formStyle} noValidate autoComplete="off" onSubmit={OnLogin}>
-                        <img src={Img} className={classes.LoginImage} alt="onLogin"/>
+                        <img src={Img} className={classes.LoginImage} alt="onLogin" />
                         <label>
-                        <TextField className={classes.formInput} id="standard-basic" name="ID" label="ID를 입력하세요" fullWidth />
-                        <br />
-                        <TextField className={classes.formInput} id="standard-basic" type="password" name="PW" label="Password를 입력하세요" fullWidth />
+                            <TextField className={classes.formInput} id="standard-basic" name="ID" label="ID를 입력하세요" fullWidth />
+                            <br />
+                            <TextField className={classes.formInput} id="standard-basic" type="password" name="PW" label="Password를 입력하세요" fullWidth />
                         </label>
                         <Button type="submit" className={classes.formButton} size="medium" variant="contained" color="secondary">
                             LOGIN
                         </Button>
-                        
+
                         <Button className={classes.formButton} size="medium" variant="contained" color="secondary" onClick={MoveSignUpPage}>
                             SIGNUP
                         </Button>
 
                     </form>
-                    
+
                 </Typography>
             </Container>
 
