@@ -6,7 +6,6 @@ import Root from "./client/Root.js"
 import {BrowserRouter} from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
 import registerServiceWorker from "./registerServiceWorker.js"
-
 ReactDOM.render(
   <BrowserRouter>
   <Root />
